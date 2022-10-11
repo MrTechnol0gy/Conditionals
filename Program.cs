@@ -12,6 +12,7 @@ namespace Conditionals
         static int enemydamage;
         static bool loopend;
         static int weapon;
+        static int healthboost;
 
         static void Main(string[] args)
         {
@@ -23,12 +24,12 @@ namespace Conditionals
             enemydamage = 10;
             weapon = 0;
             loopend = false;
+            healthboost = 3;
 
             while (loopend == false)
             {
             TakeDamage(enemydamage);
-            ShowHud();
-            
+            ShowHud();            
             }
             
             Console.ReadKey(true);
@@ -39,14 +40,18 @@ namespace Conditionals
             Console.WriteLine("Player is about to take " + damage + " damage...");
             health = health - damage;
 
-            if (health < 0)
+            if (health > 0)
+            {
+                HealthBoost(healthboost);
+            }
+            else if (health <= 0)
             {
                 health = 0;
             }
         }
 
         static void HealthCheck(int health)
-        {
+        {            
             if (health > 75)
             {
                 Console.WriteLine("Healthy");
@@ -71,6 +76,7 @@ namespace Conditionals
             HealthCheck(health);
             WeaponCheck(weapon);            
             DeathCheck(health);
+            
             Console.WriteLine();
         }
 
@@ -111,6 +117,12 @@ namespace Conditionals
                 Console.WriteLine("Currently Equipped Weapon: Infinite Knuckles");
                 weapon = 0;
             }            
+        }
+
+        static void HealthBoost(int healthboost)
+        {
+            Console.WriteLine("Your regen will recover " + healthboost + " health.");
+            health = health + healthboost;
         }
     }
 }
